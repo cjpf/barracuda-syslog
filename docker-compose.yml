@@ -1,0 +1,22 @@
+version: '3'
+services:
+        syslog-ng:
+                image: balabit/syslog-ng:latest
+                volumes:
+                - "/data/syslog-ng/conf/syslog-ng.conf:/etc/syslog-ng/syslog-ng.conf"
+                - "/data/syslog-ng/conf/ca.d:/etc/syslog-ng/ca.d"
+                - "/data/syslog-ng/conf/cert.d:/etc/syslog-ng/cert.d"
+                - "/data/syslog-ng/logs:/var/log"
+                command: ['--no-caps']
+        mysql:
+                image: mysql:8.0.19
+                environment:
+                        MYSQL_ROOT_PASSWORD: "root"
+                        MYSQL_DATABASE: "cuda_api"
+                        MYSQL_USER: "api"
+                        MYSQL_PASSWORD: "api"
+                volumes:
+                - "/data/mysql/db:/var/lib/mysql"
+                - "/data/mysql/conf/mysqld_charset.cnf:/etc/mysql/conf.d/mysqld_charset.cnf"
+        mail-api:
+                build: https://github.com/cjpf/barracuda-syslog-api.git#docker-experimental
