@@ -5,23 +5,23 @@ services:
     ports:
       - "6514:6514"
     volumes:
-      - type: bind
+      - type: 'bind'
         source: ./syslog-ng/conf/syslog-ng.conf
         target: /etc/syslog-ng/syslog-ng.conf
 
-      - type: bind
+      - type: 'bind'
         source: ./syslog-ng/conf/ca.d
         target: /etc/syslog-ng/ca.d
 
-      - type: bind
+      - type: 'bind'
         source: ./syslog-ng/conf/cert.d
         target: /etc/syslog-ng/cert.d
 
-      - type: bind
+      - type: 'bind'
         source: ./syslog-ng/log/ess.log
         target: /var/log/ess.log
 
-      - type: volume
+      - type: 'volume'
         source: syslog-ng-data
         target: /var/log
         consistency: consistent
