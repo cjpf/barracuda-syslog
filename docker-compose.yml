@@ -2,6 +2,8 @@ version: "3"
 services:
   syslog-ng:
     image: balabit/syslog-ng:latest
+    ports:
+      "6514:6514"
     volumes:
       - "./syslog-ng/conf/syslog-ng.conf:/etc/syslog-ng/syslog-ng.conf"
       - "./syslog-ng/conf/ca.d:/etc/syslog-ng/ca.d"
