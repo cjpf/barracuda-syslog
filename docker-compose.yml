@@ -27,5 +27,6 @@ services:
     volumes:
       - "./syslog-ng/logs/mail/ess.log:/home/api/app/ess.log"
     
-
+volumes:
+  syslog-ng-data:
 # networks:
