@@ -24,6 +24,7 @@ services:
       - type: volume
         source: syslog-ng-data
         target: /var/log
+        consistency: consistent
 
     command: ["--no-caps"]
 
