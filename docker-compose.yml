@@ -28,17 +28,23 @@ services:
 
     command: ["--no-caps"]
 
-  # mysql:
-  #   image: mysql:8.0.19
-  #   environment:
-  #     MYSQL_ROOT_PASSWORD: "root"
-  #     MYSQL_DATABASE: "cuda_api"
-  #     MYSQL_USER: "api"
-  #     MYSQL_PASSWORD: "api"
-  #   volumes:
-  #     - "./mysql/db:/var/lib/mysql"
-  #     - "./mysql/mysqld_charset.cnf:/etc/mysql/conf.d/mysqld_charset.cnf"
-
+  mysql:
+    image: mysql:8.0.19
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_DATABASE: "cuda_api"
+      MYSQL_USER: "api"
+      MYSQL_PASSWORD: "api"
+    volumes:
+      - type: bind
+        source: ./mysql/mysqld_charset.cnf
+        target: /etc/mysql/conf.d/mysqld_charset.cnf
+      
+      - type: volume
+        source: mysql-data
+        target: /var/lib/mysql
+        consistency: consistent
+        
   # mail-api:
   #   build: https://github.com/cjpf/barracuda-syslog-api.git#dev
   #   links:
@@ -50,4 +56,5 @@ services:
     
 volumes:
   syslog-ng-data:
+  mysql-data:
 # networks:
