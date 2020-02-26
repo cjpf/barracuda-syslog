@@ -6,27 +6,29 @@ services:
       - "./syslog-ng/conf/syslog-ng.conf:/etc/syslog-ng/syslog-ng.conf"
       - "./syslog-ng/conf/ca.d:/etc/syslog-ng/ca.d"
       - "./syslog-ng/conf/cert.d:/etc/syslog-ng/cert.d"
-      - "./syslog-ng/log/mail:/var/log/mail/"
+      - "./syslog-ng/log/ess.log:/var/log/ess.log"
       - "syslog-ng-data:/var/log"
     command: ["--no-caps"]
-  mysql:
-    image: mysql:8.0.19
-    environment:
-      MYSQL_ROOT_PASSWORD: "root"
-      MYSQL_DATABASE: "cuda_api"
-      MYSQL_USER: "api"
-      MYSQL_PASSWORD: "api"
-    volumes:
-      - "./mysql/db:/var/lib/mysql"
-      - "./mysql/mysqld_charset.cnf:/etc/mysql/conf.d/mysqld_charset.cnf"
-  mail-api:
-    build: https://github.com/cjpf/barracuda-syslog-api.git#dev
-    links:
-      - mysql:db
-    environment:
-      DATABASE_URL: mysql+pymysql://api:api@db/cuda_api
-    volumes:
-      - "./syslog-ng/logs/mail/ess.log:/home/api/app/ess.log"
+
+  # mysql:
+  #   image: mysql:8.0.19
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: "root"
+  #     MYSQL_DATABASE: "cuda_api"
+  #     MYSQL_USER: "api"
+  #     MYSQL_PASSWORD: "api"
+  #   volumes:
+  #     - "./mysql/db:/var/lib/mysql"
+  #     - "./mysql/mysqld_charset.cnf:/etc/mysql/conf.d/mysqld_charset.cnf"
+
+  # mail-api:
+  #   build: https://github.com/cjpf/barracuda-syslog-api.git#dev
+  #   links:
+  #     - mysql:db
+  #   environment:
+  #     DATABASE_URL: mysql+pymysql://api:api@db/cuda_api
+  #   # volumes:
+  #     # - "./syslog-ng/logs/mail/ess.log:/home/api/app/ess.log"
     
 volumes:
   syslog-ng-data:
