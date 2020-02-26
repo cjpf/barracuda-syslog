@@ -19,4 +19,4 @@ services:
       - "mysql/db:/var/lib/mysql"
       - "mysql/mysqld_charset.cnf:/etc/mysql/conf.d/mysqld_charset.cnf"
   mail-api:
-    build: https://github.com/cjpf/barracuda-syslog-api.git#docker-experimental
+    build: https://github.com/cjpf/barracuda-syslog-api.git#dev
