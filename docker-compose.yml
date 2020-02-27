@@ -22,10 +22,10 @@ services:
         source: ./syslog-ng/log/ess.log
         target: /var/log/ess.log
 
-      - type: volume
-        source: syslog-ng-data
-        target: /var/log
-        consistency: consistent
+      # - type: volume
+      #   source: syslog-ng-data
+      #   target: /var/log
+      #   consistency: consistent
 
     command: ["--no-caps"]
 
@@ -56,13 +56,18 @@ services:
     environment:
       DATABASE_URL: mysql+pymysql://api:api@db/cuda_api
 
+    # volumes:
+    #   - type: volume
+    #     source: syslog-ng-data
+    #     target: /home/api/app/volume_data
+    #     read-only: true
+
     volumes:
-      - type: volume
-        source: syslog-ng-data
-        target: /home/api/app/volume_data
-        read-only: true
+      - type: bind
+        source: ./syslog-ng/log/ess.log
+        target: /var/log/ess.log
 
 volumes:
-  syslog-ng-data:
+  # syslog-ng-data:
   mysql-data:
 # networks:
