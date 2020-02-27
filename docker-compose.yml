@@ -42,21 +42,23 @@ services:
       - type: bind
         source: ./mysql/mysqld_charset.cnf
         target: /etc/mysql/conf.d/mysqld_charset.cnf
-      
+
       - type: volume
         source: mysql-data
         target: /var/lib/mysql
         consistency: consistent
 
-  # mail-api:
-  #   build: https://github.com/cjpf/barracuda-syslog-api.git#dev
-  #   links:
-  #     - mysql:db
-  #   environment:
-  #     DATABASE_URL: mysql+pymysql://api:api@db/cuda_api
-  #   # volumes:
-  #     # - "./syslog-ng/logs/mail/ess.log:/home/api/app/ess.log"
-    
+  mail-api:
+    build: https://github.com/cjpf/barracuda-syslog-api.git#dev
+    links:
+      - mysql:db
+    environment:
+      DATABASE_URL: mysql+pymysql://api:api@db/cuda_api
+    volumes:
+      - type: volume
+        source: syslog-ng-data
+        target: ./app/
+
 volumes:
   syslog-ng-data:
   mysql-data:
