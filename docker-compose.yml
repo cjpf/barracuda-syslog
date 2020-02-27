@@ -4,6 +4,7 @@ services:
     image: balabit/syslog-ng:latest
     ports:
       - 6514:6514
+
     volumes:
       - type: bind
         source: ./syslog-ng/conf/syslog-ng.conf
@@ -54,10 +55,12 @@ services:
       - mysql:db
     environment:
       DATABASE_URL: mysql+pymysql://api:api@db/cuda_api
+
     volumes:
       - type: volume
         source: syslog-ng-data
-        target: /var/log
+        target: /home/api/app/volume_data
+        read-only: true
 
 volumes:
   syslog-ng-data:
