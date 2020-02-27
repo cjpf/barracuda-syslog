@@ -49,14 +49,14 @@ services:
     build: https://github.com/cjpf/barracuda-syslog-api.git#dev
     ports:
       - 5000:5000
-
+      
     depends_on: 
       - mysql
       - syslog-ng
     links:
       - mysql:db
     environment:
-      DATABASE_URL: mysql+pymysql://${DB_USER}:${DB_USER_PASSWORD}@db/cuda_api?charset=uft8mb4
+      DATABASE_URL: mysql+pymysql://${DB_USER}:${DB_USER_PASSWORD}@db/cuda_api
 
     volumes:
       - type: bind
