@@ -18,9 +18,9 @@ services:
         source: ./syslog-ng/conf/cert.d
         target: /etc/syslog-ng/cert.d
 
-      # - type: bind
-      #   source: ./syslog-ng/log/ess.log
-      #   target: /var/log/ess.log
+      - type: bind
+        source: ./syslog-ng/log/ess.log
+        target: /var/log/ess.log
 
     command: ["--no-caps"]
 
@@ -46,6 +46,9 @@ services:
 
   mail-api:
     build: https://github.com/cjpf/barracuda-syslog-api.git#dev
+    depends_on: 
+      - mysql
+      - syslog-ng
     links:
       - mysql:db
       - syslog-ng:syslog
@@ -54,7 +57,7 @@ services:
 
     volumes:
       - type: bind
-        source: syslog:/var/log/ess.log
+        source: ./syslog-ng/log/ess.log
         target: /home/api/app/ess.log
 
 volumes:
