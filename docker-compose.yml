@@ -11,11 +11,11 @@ services:
         target: /etc/syslog-ng/syslog-ng.conf
 
       - type: bind
-        source: ./syslog-ng/conf/ca.d
+        source: ${CA_PATH}
         target: /etc/syslog-ng/ca.d
 
       - type: bind
-        source: ./syslog-ng/conf/cert.d
+        source: ${CERT_PATH}
         target: /etc/syslog-ng/cert.d
 
       - type: bind
@@ -29,10 +29,10 @@ services:
     ports:
       - 3306:3306
     environment:
-      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
       MYSQL_DATABASE: "cuda_api"
-      MYSQL_USER: "api"
-      MYSQL_PASSWORD: "api"
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_USER_PASSWORD}
 
     volumes:
       - type: bind
@@ -49,11 +49,8 @@ services:
     depends_on: 
       - mysql
       - syslog-ng
-    links:
-      - mysql:db
-      - syslog-ng:syslog
     environment:
-      DATABASE_URL: mysql+pymysql://api:api@db/cuda_api
+      DATABASE_URL: mysql+pymysql://${DB_USER}:${DB_USER_PASSWORD}@localhost:3306/cuda_api
 
     volumes:
       - type: bind
