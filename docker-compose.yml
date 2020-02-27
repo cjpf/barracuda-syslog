@@ -65,7 +65,7 @@ services:
     volumes:
       - type: bind
         source: ./syslog-ng/log/ess.log
-        target: /var/log/ess.log
+        target: /home/api/app/ess.log
 
 volumes:
   # syslog-ng-data:
