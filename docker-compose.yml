@@ -3,7 +3,7 @@ services:
   syslog-ng:
     image: balabit/syslog-ng:latest
     ports:
-      - 6514:6514
+      - "6514:6514"
 
     volumes:
       - type: bind
@@ -26,8 +26,8 @@ services:
 
   mysql:
     image: mysql:8.0.19
-    ports:
-      - 3306:3306
+    expose:
+      - "3306"
 
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
@@ -47,9 +47,11 @@ services:
 
   mail-api:
     build: https://github.com/cjpf/barracuda-syslog-api.git#dev
-    ports:
-      - 5000:5000
-      
+    # ports:
+    #   - 5000:5000
+    expose:
+      - "5000"
+
     depends_on: 
       - mysql
       - syslog-ng
@@ -62,6 +64,13 @@ services:
       - type: bind
         source: ./syslog-ng/log/ess.log
         target: /home/api/app/ess.log
+
+  nginx:
+    build: ./services/nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - mail-api
 
 volumes:
   mysql-data:
