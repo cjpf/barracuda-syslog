@@ -4,27 +4,23 @@ services:
     image: balabit/syslog-ng:latest
     ports:
       - 6514:6514
+
     volumes:
       - type: bind
         source: ./syslog-ng/conf/syslog-ng.conf
         target: /etc/syslog-ng/syslog-ng.conf
 
       - type: bind
-        source: ./syslog-ng/conf/ca.d
+        source: ${CA_PATH}
         target: /etc/syslog-ng/ca.d
 
       - type: bind
-        source: ./syslog-ng/conf/cert.d
+        source: ${CERT_PATH}
         target: /etc/syslog-ng/cert.d
 
       - type: bind
         source: ./syslog-ng/log/ess.log
         target: /var/log/ess.log
-
-      - type: volume
-        source: syslog-ng-data
-        target: /var/log
-        consistency: consistent
 
     command: ["--no-caps"]
 
@@ -33,31 +29,35 @@ services:
     ports:
       - 3306:3306
     environment:
-      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
       MYSQL_DATABASE: "cuda_api"
-      MYSQL_USER: "api"
-      MYSQL_PASSWORD: "api"
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_USER_PASSWORD}
 
     volumes:
       - type: bind
         source: ./mysql/mysqld_charset.cnf
         target: /etc/mysql/conf.d/mysqld_charset.cnf
-      
+
       - type: volume
         source: mysql-data
         target: /var/lib/mysql
         consistency: consistent
 
-  # mail-api:
-  #   build: https://github.com/cjpf/barracuda-syslog-api.git#dev
-  #   links:
-  #     - mysql:db
-  #   environment:
-  #     DATABASE_URL: mysql+pymysql://api:api@db/cuda_api
-  #   # volumes:
-  #     # - "./syslog-ng/logs/mail/ess.log:/home/api/app/ess.log"
-    
+  mail-api:
+    build: https://github.com/cjpf/barracuda-syslog-api.git#dev
+    depends_on: 
+      - mysql
+      - syslog-ng
+    links:
+      - mysql:db
+    environment:
+      DATABASE_URL: mysql+pymysql://${DB_USER}:${DB_USER_PASSWORD}@db/cuda_api
+
+    volumes:
+      - type: bind
+        source: ./syslog-ng/log/ess.log
+        target: /home/api/app/ess.log
+
 volumes:
-  syslog-ng-data:
   mysql-data:
-# networks:
