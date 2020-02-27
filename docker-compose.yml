@@ -1,25 +1,13 @@
 version: "3.2"
 services:
   syslog-ng:
-    image: balabit/syslog-ng:latest
+    build: ./services/syslog-ng
     ports:
       - "6514:6514"
 
     volumes:
       - type: bind
-        source: ./syslog-ng/conf/syslog-ng.conf
-        target: /etc/syslog-ng/syslog-ng.conf
-
-      - type: bind
-        source: ${CA_PATH}
-        target: /etc/syslog-ng/ca.d
-
-      - type: bind
-        source: ${CERT_PATH}
-        target: /etc/syslog-ng/cert.d
-
-      - type: bind
-        source: ./syslog-ng/log/ess.log
+        source: ./services/syslog-ng/ess.log
         target: /var/log/ess.log
 
     command: ["--no-caps"]
@@ -50,7 +38,7 @@ services:
 
     volumes:
       - type: bind
-        source: ./syslog-ng/log/ess.log
+        source: ./services/syslog-ng/ess.log
         target: /home/api/app/ess.log
 
   nginx:
