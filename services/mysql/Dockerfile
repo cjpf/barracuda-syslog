@@ -1,0 +1,8 @@
+FROM mysql:8.0.19
+
+COPY mysqld_charset.cnf /etc/mysql/conf.d/mysqld_charset.cnf
+ENV MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+ENV MYSQL_DATABASE: "cuda_api"
+ENV MYSQL_USER: ${DB_USER}
+ENV MYSQL_PASSWORD: ${DB_USER_PASSWORD}
+EXPOSE 3306

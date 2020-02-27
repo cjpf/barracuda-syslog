@@ -25,21 +25,11 @@ services:
     command: ["--no-caps"]
 
   mysql:
-    image: mysql:8.0.19
+    build: ./services/mysql
     expose:
       - "3306"
 
-    environment:
-      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
-      MYSQL_DATABASE: "cuda_api"
-      MYSQL_USER: ${DB_USER}
-      MYSQL_PASSWORD: ${DB_USER_PASSWORD}
-
     volumes:
-      - type: bind
-        source: ./mysql/mysqld_charset.cnf
-        target: /etc/mysql/conf.d/mysqld_charset.cnf
-
       - type: volume
         source: mysql-data
         target: /var/lib/mysql
