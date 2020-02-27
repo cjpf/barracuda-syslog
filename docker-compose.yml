@@ -57,7 +57,7 @@ services:
     volumes:
       - type: volume
         source: syslog-ng-data
-        target: ./app/
+        target: /home/api/app/
 
 volumes:
   syslog-ng-data:
