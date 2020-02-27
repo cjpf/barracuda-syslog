@@ -58,7 +58,7 @@ services:
     links:
       - mysql:db
     environment:
-      DATABASE_URL: mysql+pymysql://${DB_USER}:${DB_USER_PASSWORD}@db/cuda_api
+      DATABASE_URL: "mysql+pymysql://${DB_USER}:${DB_USER_PASSWORD}@db/cuda_api?charset=utf8mb4"
 
     volumes:
       - type: bind
