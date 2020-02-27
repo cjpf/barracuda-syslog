@@ -63,5 +63,12 @@ services:
         source: ./syslog-ng/log/ess.log
         target: /home/api/app/ess.log
 
+  nginx:
+    build: ./services/nginx
+    ports:
+      - "80:80"
+    depends-on:
+      - mail-api
+
 volumes:
   mysql-data:
