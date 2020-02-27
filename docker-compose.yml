@@ -18,9 +18,9 @@ services:
         source: ./syslog-ng/conf/cert.d
         target: /etc/syslog-ng/cert.d
 
-      - type: bind
-        source: ./syslog-ng/log/ess.log
-        target: /var/log/ess.log
+      # - type: bind
+      #   source: ./syslog-ng/log/ess.log
+      #   target: /var/log/ess.log
 
     command: ["--no-caps"]
 
@@ -48,12 +48,13 @@ services:
     build: https://github.com/cjpf/barracuda-syslog-api.git#dev
     links:
       - mysql:db
+      - syslog-ng:syslog
     environment:
       DATABASE_URL: mysql+pymysql://api:api@db/cuda_api
 
     volumes:
       - type: bind
-        source: ./syslog-ng/log/ess.log
+        source: syslog:/var/log/ess.log
         target: /home/api/app/ess.log
 
 volumes:
