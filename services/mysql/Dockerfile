@@ -1,7 +1,5 @@
 FROM mysql:8.0.19
 
 COPY mysqld_charset.cnf /etc/mysql/conf.d/mysqld_charset.cnf
-ENV MYSQL_ROOT_PASSWORD: root
-ENV MYSQL_USER: api
-ENV MYSQL_PASSWORD: api
+VOLUME /mysql-data /var/lib/mysql
 EXPOSE 3306

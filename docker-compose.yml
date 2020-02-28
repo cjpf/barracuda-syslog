@@ -16,12 +16,11 @@ services:
     build: ./services/mysql
     expose:
       - "3306"
-
-    volumes:
-      - type: volume
-        source: mysql-data
-        target: /var/lib/mysql
-        consistency: consistent
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: cuda_api
+      MYSQL_USER: api
+      MYSQL_PASSWORD: api
 
   mail-api:
     build: https://github.com/cjpf/barracuda-syslog-api.git#dev
