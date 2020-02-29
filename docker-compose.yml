@@ -30,15 +30,28 @@ services:
     depends_on: 
       - mysql
       - syslog-ng
+      - mail
     links:
       - mysql:db
+      - mail:out-mail
     environment:
       DATABASE_URL: "mysql+pymysql://api:api@db/cuda_api?charset=utf8mb4"
+      MAIL_SERVER: out-mail
+      MAIL_PORT: "25"
 
     volumes:
       - type: bind
         source: ./services/syslog-ng/ess.log
         target: /home/api/app/ess.log
+
+  mail:
+    image: bytemark/smtp
+    restart: always
+    # environment:
+    #   RELAY_HOST: smtp.example.com
+    #   RELAY_PORT: "587"
+    #   RELAY_USERNAME: bob@example.com
+    #   RELAY_PASSWORD: secret
 
   nginx:
     build: ./services/nginx
