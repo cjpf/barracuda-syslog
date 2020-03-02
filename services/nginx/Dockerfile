@@ -1,13 +1,13 @@
 FROM nginx:1.17-alpine
 
 # Copy nginx config
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY ./services/nginx/nginx.conf /etc/nginx/nginx.conf
 
 # Remove default server config
 RUN rm /etc/nginx/conf.d/default.conf
 
 # Server config for standalone API
-COPY api_server.conf /etc/nginx/conf.d
+COPY ./services/nginx/api_server.conf /etc/nginx/conf.d
 
 # Server config for full stack, API and web interface
 # COPY interface_nginx.conf /etc/nginx/nginx.conf
