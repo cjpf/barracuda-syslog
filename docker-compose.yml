@@ -1,7 +1,9 @@
 version: "3.2"
 services:
   syslog-ng:
-    build: ./services/syslog-ng
+    build: 
+      context: ./
+      dockerfile: ./services/syslog-ng/Dockerfile
     ports:
       - "6514:6514"
 
@@ -54,7 +56,9 @@ services:
     #   RELAY_PASSWORD: secret
 
   nginx:
-    build: ./services/nginx
+    build:
+      context: ./
+      dockerfile: ./services/nginx/Dockerfile
     ports:
       - "80:80"
     depends_on:
