@@ -61,6 +61,7 @@ services:
       dockerfile: ./services/nginx/Dockerfile
     ports:
       - "80:80"
+      - "443:443"
     depends_on:
       - mail-api
 
