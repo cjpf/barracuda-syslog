@@ -1,11 +1,18 @@
 FROM nginx:1.17-alpine
 
+# Copy nginx config
+COPY nginx.conf /etc/nginx/nginx.conf
+
 # Remove default server config
 RUN rm /etc/nginx/conf.d/default.conf
 
-# For standalone API
+# Server config for standalone API
 COPY api_server.conf /etc/nginx/conf.d
 
-# For full stack, API and web interface
+# Server config for full stack, API and web interface
 # COPY interface_nginx.conf /etc/nginx/nginx.conf
 # COPY interface_server.conf /etc/nginx/conf.d
+
+# Copy certificates for SSL
+COPY ../certificates/cert.d/cert.pem /etc/ssl/ssl-bundle.crt
+COPY ../certificates/cert.d/key.pem /etc/ssl/ssl.key
