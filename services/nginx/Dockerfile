@@ -14,5 +14,5 @@ COPY api_server.conf /etc/nginx/conf.d
 # COPY interface_server.conf /etc/nginx/conf.d
 
 # Copy certificates for SSL
-COPY ../certificates/cert.d/cert.pem /etc/ssl/ssl-bundle.crt
-COPY ../certificates/cert.d/key.pem /etc/ssl/ssl.key
+COPY ./services/certificates/cert.d/cert.pem /etc/ssl/ssl-bundle.crt
+COPY ./services/certificates/cert.d/key.pem /etc/ssl/ssl.key
