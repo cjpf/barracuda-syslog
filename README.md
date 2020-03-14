@@ -1,10 +1,9 @@
 # barracuda-syslog
 A dockerized implementation of the barracuda-syslog-api and barracuda-syslog-interface projects.  This also configures syslog-ng, mysql and postfix containers to support those applications.
-This application has not been deployed as an AMI or on any services like Kubernetes at this time. 
 
 # Deployment
 ## System Setup
-If you are using your own system with shell access, I recommend using Ubuntu 19.10 for deployment of this application.  This application will not work without a valid SSL certificate.  You may provide one of your own that matches the hostname for the application, or you may generate your own using the instructions below.
+If you are using your own system with shell access, I recommend using Ubuntu 19.10 for deployment of this application.  This application will not work without a valid SSL certificate because the Barracuda Email Security Service syslog integration requires TLS.  You may provide your own certificate but if you do not have one you may build one with Let's Encrypt.
 
 
 ## Generating a Standalone Certificate with Let's Encrypt certbot
